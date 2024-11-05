@@ -9,21 +9,20 @@ import SwiftUI
 
 struct ButtonView: View {
     var title: String
-    var backgroundColor = Color(.systemBlue)
-    var textColor = Color.white
-    var width: CGFloat = UIScreen.main.bounds.width - 200
-    var height: CGFloat = 48
-    var action: () -> Void
-    
+    var backgroundColor: Color = .blue
+    var action: (() -> Void)? = nil
+
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            action?()  // Appelle l'action seulement si elle est définie
+        }) {
             Text(title)
-                .fontWeight(.semibold)
-                .foregroundColor(textColor)
-                .frame(width: width, height: height)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(backgroundColor)
+                .foregroundColor(.white)
+                .cornerRadius(5)  // Utilise des coins arrondis
         }
-        .background(backgroundColor)
-        .clipShape(.buttonBorder)
     }
 }
 
@@ -31,5 +30,4 @@ struct ButtonView: View {
     ButtonView(title: "Sign In", action: {
         print("Button Pressed")
     })
-
 }

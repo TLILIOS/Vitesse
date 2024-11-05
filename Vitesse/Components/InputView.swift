@@ -8,27 +8,33 @@
 import SwiftUI
 
 struct InputView: View {
+    var label: String
+    var placeholder: String
     @Binding var text: String
-    let title: String
-    let placeholder: String
-    var isSecureField = false
+    var isSecure: Bool = false
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .foregroundStyle(Color(.darkGray))
-                .fontWeight(.semibold)
-                .font(.footnote)
-            if isSecureField {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(label)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            
+            if isSecure {
                 SecureField(placeholder, text: $text)
-                    .font(.system(size: 14))
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(5)
             } else {
                 TextField(placeholder, text: $text)
-                    .font(.system(size: 14))
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(5)
+                    .autocapitalization(.none)
             }
         }
     }
 }
 
 #Preview {
-    InputView(text: .constant("!!!"), title: "Email Adres", placeholder: "Name@example.com")
+    InputView(label: "Login", placeholder: "Name@example.com", text: .constant("!!!"))
 }

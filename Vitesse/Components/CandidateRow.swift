@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct CandidateRow: View {
-    let candidate: String
+    let candidate: Candidate
     let isFavorite: Bool
     let toggleFavorite: () -> Void
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(candidate)
-                    .font(.headline)
-                    .padding(.vertical, 5)
-                Divider()
-                    .background(Color.gray)
-            }
+            // Nom du candidat
+            Text(candidate.name)
+                .font(.headline)
+                .padding(.vertical, 5)
+
             Spacer()
+
+            // Étoile pour marquer comme favori
             Button(action: toggleFavorite) {
                 Image(systemName: isFavorite ? "star.fill" : "star")
                     .foregroundColor(isFavorite ? .yellow : .gray)
@@ -35,8 +35,7 @@ struct CandidateRow: View {
 }
 
 #Preview {
-    CandidateRow(candidate: "Alice Dupont", isFavorite: true) {
+    CandidateRow(candidate: Candidate(id: UUID().uuidString, name: "Ben Affleck", email: "affleck@gmail.com"), isFavorite: true) {
         print("Toggle favorite")
     }
 }
-

@@ -4,25 +4,24 @@
 //
 //  Created by MacBook Air on 05/11/2024.
 //
-// File: AllCandidatesView.swift
-import SwiftUI
-
-// File: AllCandidatesView.swift
 import SwiftUI
 
 struct AllCandidatesView: View {
-    @State private var favoriteCandidates: Set<String> = [] // Stocke les favoris
+    @State private var favoriteCandidates: Set<String> = [] // Stocke les favoris par ID
     @State private var searchText: String = ""              // Texte de recherche
     @State private var isShowingFavoritesView = false       // Contrôle la navigation vers la vue des favoris
     @State private var isShowingFideView = false            // Contrôle la navigation vers la vue Fide
-
-    private let candidates = [
-        "Alice Dupont",
-        "Bob Martin",
-        "Charlie Laroche",
-        "Diana Poirier",
-        "Ethan Moreau",
-        "Fiona Langlois"
+    @State private var candidateDetailView: Set<String> = []
+    // Liste des candidats importée de User.swift
+    private var candidates: [Candidate] = [
+        Candidate(id: UUID().uuidString, name: "Ben Affleck", email: "affleck@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Jennifer Lopez", email: "jlopez@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Matt Damon", email: "matt.damon@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Scarlett Johansson", email: "scarlett.j@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Chris Hemsworth", email: "chris.hemsworth@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Robert Downey Jr.", email: "robert.dj@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Emma Stone", email: "emma.stone@gmail.com"),
+        Candidate(id: UUID().uuidString, name: "Ryan Gosling", email: "ryan.gosling@gmail.com")
     ]
 
     var body: some View {
@@ -35,31 +34,36 @@ struct AllCandidatesView: View {
                     .cornerRadius(8)
                     .padding(.horizontal)
 
-                // Liste de tous les candidats avec étoiles pour les favoris
-                List(filteredCandidates, id: \.self) { candidate in
-                    CandidateRow(candidate: candidate, isFavorite: favoriteCandidates.contains(candidate)) {
-                        toggleFavorite(candidate)
+                // Liste des candidats avec lignes cliquables
+                List(filteredCandidates) { candidate in
+                    NavigationLink(destination: CandidateDetailView(candidate: candidate)) {
+                        CandidateRow(candidate: candidate, isFavorite: favoriteCandidates.contains(candidate.id)) {
+                            toggleFavorite(candidate)
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
 
-                // NavigationLink pour FavoriteCandidatesView
+                // Navigation vers la vue FavoriteCandidatesView
                 NavigationLink(
-                    destination: FavoriteCandidatesView(favoriteCandidates: $favoriteCandidates),
+                    destination: FavoriteCandidatesView(
+                        favoriteCandidates: $favoriteCandidates,
+                        allCandidates: candidates
+                    ),
                     isActive: $isShowingFavoritesView
                 ) {
                     EmptyView()
                 }
 
-                // NavigationLink pour FideView
+                // Navigation vers la vue EditableView
                 NavigationLink(
-                    destination: FideView(),
+                    destination: EditableView(),
                     isActive: $isShowingFideView
                 ) {
                     EmptyView()
                 }
             }
-            .navigationBarTitle("Condidats", displayMode: .inline)
+            .navigationBarTitle("Candidats", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Edit") {
                     isShowingFideView = true // Active la vue Fide
@@ -75,20 +79,20 @@ struct AllCandidatesView: View {
     }
     
     // Filtre les candidats en fonction du texte de recherche
-    private var filteredCandidates: [String] {
+    private var filteredCandidates: [Candidate] {
         if searchText.isEmpty {
             return candidates
         } else {
-            return candidates.filter { $0.lowercased().contains(searchText.lowercased()) }
+            return candidates.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
 
-    // Basculer les favoris
-    private func toggleFavorite(_ candidate: String) {
-        if favoriteCandidates.contains(candidate) {
-            favoriteCandidates.remove(candidate)
+    // Basculer l'état de favori pour un candidat donné
+    private func toggleFavorite(_ candidate: Candidate) {
+        if favoriteCandidates.contains(candidate.id) {
+            favoriteCandidates.remove(candidate.id)
         } else {
-            favoriteCandidates.insert(candidate)
+            favoriteCandidates.insert(candidate.id)
         }
     }
 }

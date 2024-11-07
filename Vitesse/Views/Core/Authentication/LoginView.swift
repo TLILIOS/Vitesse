@@ -32,10 +32,17 @@ struct LoginView: View {
                 .padding(.bottom, 30)
                 
                 VStack(spacing: 50) {
-                    ButtonView(title: "Sign in") {
-                        
+                    NavigationLink {
+                        AllCandidatesView()
+                            .navigationBarBackButtonHidden()
+                    } label: {
+                        Text("Sign in")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(5)
                     }
-                    
                     NavigationLink {
                         RegistrationView()
                             .navigationBarBackButtonHidden()

@@ -36,7 +36,7 @@ struct AllCandidatesView: View {
 
                 // Liste des candidats avec lignes cliquables
                 List(filteredCandidates) { candidate in
-                    NavigationLink(destination: CandidateDetailView(candidate: candidate)) {
+                    NavigationLink(destination: CandidateDetailView(candidate: candidate, isFavorite: favoriteCandidates.contains(candidate.id))) {
                         CandidateRow(candidate: candidate, isFavorite: favoriteCandidates.contains(candidate.id)) {
                             toggleFavorite(candidate)
                         }

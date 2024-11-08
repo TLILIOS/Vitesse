@@ -2,7 +2,7 @@
 //  CandidateRow.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 05/11/2024.
+//  Created by TLiLi Hamdi on 05/11/2024.
 //
 
 import SwiftUI

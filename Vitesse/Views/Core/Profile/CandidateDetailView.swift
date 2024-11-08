@@ -2,8 +2,8 @@
 //  Profile.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 07/11/2024.
-// File: Profile.swift
+//  Created by TLiLi Hamdi on 07/11/2024.
+
 import SwiftUI
 
 struct CandidateDetailView: View {
@@ -50,9 +50,10 @@ struct CandidateDetailView: View {
             
             Spacer()
             
-            // Bouton pour contacter le candidat
+            // Bouton pour acceder au LinkedIn du candidat
             HStack {
                 Text("LinkedIn")
+                
                     .font(.headline)
                     .padding()
                 Button(action: {

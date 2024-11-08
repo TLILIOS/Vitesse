@@ -2,7 +2,7 @@
 //  EditableView.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 05/11/2024.
+//  Created by TLiLi Hamdi on 05/11/2024.
 //
 
 import SwiftUI
@@ -12,18 +12,6 @@ struct EditableView: View {
     @State private var selectedCandidates: Set<String> = []         // Stocke les ID des candidats sélectionnés
     @State private var favoriteCandidates: Set<String> = []         // Stocke les ID des favoris
     @Environment(\.presentationMode) private var presentationMode   // Pour navigation arrière
-
-    // Liste des candidats
-    @State private var candidates: [Candidate] = [
-        Candidate(id: UUID().uuidString, name: "Ben Affleck", email: "affleck@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Jennifer Lopez", email: "jlopez@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Matt Damon", email: "matt.damon@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Scarlett Johansson", email: "scarlett.j@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Chris Hemsworth", email: "chris.hemsworth@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Robert Downey Jr.", email: "robert.dj@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Emma Stone", email: "emma.stone@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Ryan Gosling", email: "ryan.gosling@gmail.com")
-    ]
 
     var body: some View {
         NavigationView {

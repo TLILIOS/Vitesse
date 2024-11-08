@@ -2,7 +2,7 @@
 //  VitesseApp.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 02/11/2024.
+//  Created by TLiLi Hamdi on 02/11/2024.
 //
 
 import SwiftUI
@@ -11,7 +11,7 @@ import SwiftUI
 struct VitesseApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView()
         }
     }
 }

@@ -1,28 +1,17 @@
 //
-//  CandidatsView.swift
+//  AllCandidatsView.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 05/11/2024.
+//  Created by TLiLi Hamdi on 05/11/2024.
 //
 import SwiftUI
 
 struct AllCandidatesView: View {
     @State private var favoriteCandidates: Set<String> = [] // Stocke les favoris par ID
-    @State private var searchText: String = ""              // Texte de recherche
-    @State private var isShowingFavoritesView = false       // Contrôle la navigation vers la vue des favoris
-    @State private var isShowingFideView = false            // Contrôle la navigation vers la vue Fide
+    @State private var searchText: String = ""
+    @State private var isShowingFavoritesView = false
+    @State private var isShowingEditableView = false
     @State private var candidateDetailView: Set<String> = []
-    // Liste des candidats importée de User.swift
-    private var candidates: [Candidate] = [
-        Candidate(id: UUID().uuidString, name: "Ben Affleck", email: "affleck@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Jennifer Lopez", email: "jlopez@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Matt Damon", email: "matt.damon@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Scarlett Johansson", email: "scarlett.j@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Chris Hemsworth", email: "chris.hemsworth@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Robert Downey Jr.", email: "robert.dj@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Emma Stone", email: "emma.stone@gmail.com"),
-        Candidate(id: UUID().uuidString, name: "Ryan Gosling", email: "ryan.gosling@gmail.com")
-    ]
 
     var body: some View {
         NavigationView {
@@ -58,7 +47,7 @@ struct AllCandidatesView: View {
                 // Navigation vers la vue EditableView
                 NavigationLink(
                     destination: EditableView(),
-                    isActive: $isShowingFideView
+                    isActive: $isShowingEditableView
                 ) {
                     EmptyView()
                 }
@@ -66,7 +55,7 @@ struct AllCandidatesView: View {
             .navigationBarTitle("Candidats", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Edit") {
-                    isShowingFideView = true // Active la vue Fide
+                    isShowingEditableView = true // Active la vue EditableView
                 },
                 trailing: Button(action: {
                     isShowingFavoritesView = true // Active la vue des favoris

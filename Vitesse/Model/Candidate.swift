@@ -1,8 +1,8 @@
 //
-//  User.swift
+//  Candidate.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 04/11/2024.
+//  Created by TLiLi Hamdi on 04/11/2024.
 //
 
 import Foundation

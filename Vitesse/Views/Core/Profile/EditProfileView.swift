@@ -2,7 +2,7 @@
 //  EditProfileView.swift
 //  Vitesse
 //
-//  Created by MacBook Air on 07/11/2024.
+//  Created by TLiLi Hamdi on 07/11/2024.
 //
 import SwiftUI
 
@@ -48,7 +48,7 @@ struct EditProfileView: View {
                         // Ajouter du code pour naviguer vers la vue précédente si nécessaire
                     }
                 }) {
-                    Text(isModified ? "Done" : "Back")  // Affiche Done si des modifications ont été faites, sinon Back
+                    Text(isModified ? "Done" : "Back")  // Affiche Done si des modifications ont été faites, sinon Go Back
                         .foregroundColor(isModified ? .blue : .gray)
                 }
                 .disabled(!isModified)  // Désactive si aucune modification

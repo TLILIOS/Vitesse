@@ -14,7 +14,7 @@ struct AllCandidatesView: View {
     @State private var candidateDetailView: Set<String> = []
 
     var body: some View {
-        NavigationView {
+        
             VStack {
                 // Barre de recherche
                 TextField("Rechercher un candidat...", text: $searchText)
@@ -64,7 +64,7 @@ struct AllCandidatesView: View {
                         .foregroundColor(.yellow)
                 }
             )
-        }
+        
     }
     
     // Filtre les candidats en fonction du texte de recherche
@@ -87,5 +87,8 @@ struct AllCandidatesView: View {
 }
 
 #Preview {
-    AllCandidatesView()
+    NavigationView {
+        AllCandidatesView()
+    }
+    
 }

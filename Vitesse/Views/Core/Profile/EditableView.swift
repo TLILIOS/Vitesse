@@ -14,8 +14,7 @@ struct EditableView: View {
     @Environment(\.presentationMode) private var presentationMode   // Pour navigation arrière
 
     var body: some View {
-        NavigationView {
-            VStack {
+                    VStack {
                 // Barre de recherche
                 TextField("Rechercher un candidat...", text: $searchText)
                     .padding()
@@ -54,7 +53,7 @@ struct EditableView: View {
                 }
                 .disabled(selectedCandidates.isEmpty) // Désactive le bouton si aucune sélection
             )
-        }
+        
     }
     
     // Filtre les candidats en fonction du texte de recherche
@@ -92,5 +91,8 @@ struct EditableView: View {
 }
 
 #Preview {
-    EditableView()
+    NavigationView {
+        EditableView()
+    }
+    
 }

@@ -7,35 +7,55 @@
 
 import SwiftUI
 
-struct CandidateRow: View {
-    let candidate: Candidate
-    let isFavorite: Bool
-    let toggleFavorite: () -> Void
+struct AllCandidatesView: View {
+    @StateObject private var viewModel = CandidateManagementViewModel() // Instance de CandidateManagementViewModel
 
     var body: some View {
-        HStack {
-            // Nom du candidat
-            Text(candidate.name)
-                .font(.headline)
-                .padding(.vertical, 5)
-
-            Spacer()
-
-            // Étoile pour marquer comme favori
-            Button(action: toggleFavorite) {
-                Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundColor(isFavorite ? .yellow : .gray)
+        NavigationView {
+            VStack {
+                Text("All Candidates")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding()
+                } else if viewModel.candidates.isEmpty {
+                    Text("No candidates available")
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    List(viewModel.candidates, id: \.id) { candidate in
+                        CandidateRow(candidate: candidate)
+                    }
+                    .listStyle(PlainListStyle())
+                }
             }
-            .buttonStyle(BorderlessButtonStyle())
+            .padding()
+            .onAppear {
+                viewModel.fetchCandidates() // Charger les candidats quand la vue apparaît
+            }
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-        .padding(.horizontal)
+    }
+}
+
+// Vue pour afficher les détails de chaque candidat
+struct CandidateRow: View {
+    let candidate: Candidate
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(candidate.firstName) \(candidate.lastName)")
+                .font(.headline)
+            Text(candidate.email)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical, 8)
     }
 }
 
 #Preview {
-    CandidateRow(candidate: Candidate(id: UUID().uuidString, name: "Ben Affleck", email: "affleck@gmail.com"), isFavorite: true) {
-        print("Toggle favorite")
-    }
+    AllCandidatesView()
 }

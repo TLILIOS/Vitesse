@@ -2,11 +2,10 @@
 //  VitesseTests.swift
 //  VitesseTests
 //
-//  Created by MacBook Air on 02/11/2024.
+//  Created by TLiLi Hamdi on 13/11/2024.
 //
 
 import XCTest
-@testable import Vitesse
 
 final class VitesseTests: XCTestCase {
 

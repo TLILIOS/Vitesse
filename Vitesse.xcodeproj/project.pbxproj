@@ -35,16 +35,6 @@
 			path = Vitesse;
 			sourceTree = "<group>";
 		};
-		D02879FD2CD683A300749B6E /* VitesseTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VitesseTests;
-			sourceTree = "<group>";
-		};
-		D0287A072CD683A300749B6E /* VitesseUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VitesseUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				D02879EC2CD683A100749B6E /* Vitesse */,
-				D02879FD2CD683A300749B6E /* VitesseTests */,
-				D0287A072CD683A300749B6E /* VitesseUITests */,
 				D02879EB2CD683A100749B6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				D02879FC2CD683A300749B6E /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				D02879FD2CD683A300749B6E /* VitesseTests */,
-			);
 			name = VitesseTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				D0287A062CD683A300749B6E /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				D0287A072CD683A300749B6E /* VitesseUITests */,
 			);
 			name = VitesseUITests;
 			packageProductDependencies = (
@@ -178,6 +160,7 @@
 					};
 					D02879F92CD683A300749B6E = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 						TestTargetID = D02879E92CD683A100749B6E;
 					};
 					D0287A032CD683A300749B6E = {
@@ -452,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -460,6 +444,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TliliOS.VitesseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vitesse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vitesse";
@@ -470,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

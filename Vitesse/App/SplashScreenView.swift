@@ -12,7 +12,7 @@ struct SplashScreenView: View {
     var body: some View {
         if isActive {
             // Navigue vers la vue principale de l'application
-            LoginView() // Remplace avec la vue principale de ton application
+            AuthenticationView() // Remplace avec la vue principale de ton application
         } else {
             VStack {
                 Spacer()

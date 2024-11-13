@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct AuthenticationView: View {
+    @StateObject private var viewModel = AuthenticationViewModel() // Instance de AuthenticationViewModel
     @State private var username: String = ""
     @State private var password: String = ""
+    @State private var isAuthenticated = false // Pour rediriger après la connexion
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -22,7 +25,7 @@ struct LoginView: View {
                 
                 HStack {
                     Spacer()
-                    NavigationLink(destination: ForgotPasswordView()){
+                    NavigationLink(destination: ForgotPasswordView()) {
                         Text("Forgot password?")
                             .foregroundColor(.red)
                     }
@@ -31,10 +34,9 @@ struct LoginView: View {
                 .padding(.bottom, 30)
                 
                 VStack(spacing: 50) {
-                    NavigationLink {
-                        AllCandidatesView()
-                            .navigationBarBackButtonHidden()
-                    } label: {
+                    Button(action: {
+                        viewModel.authenticate(email: username, password: password)
+                    }) {
                         Text("Sign in")
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -42,6 +44,8 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .cornerRadius(5)
                     }
+                    .disabled(username.isEmpty || password.isEmpty) // Désactiver le bouton si les champs sont vides
+                    
                     NavigationLink {
                         RegistrationView()
                             .navigationBarBackButtonHidden()
@@ -53,15 +57,29 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .cornerRadius(5)
                     }
-                    
-                    
                 }
+                
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 10)
+                }
+                
+                NavigationLink(
+                    destination: AllCandidatesView().navigationBarBackButtonHidden(),
+                    isActive: $isAuthenticated,
+                    label: { EmptyView() }
+                )
             }
             .padding()
+            .onReceive(viewModel.$isAuthenticated) { isAuth in
+                isAuthenticated = isAuth // Met à jour l’état en fonction de la réponse du ViewModel
+            }
         }
     }
 }
 
 #Preview {
-    LoginView()
+    AuthenticationView()
 }

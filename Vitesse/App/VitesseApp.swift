@@ -11,7 +11,7 @@ import SwiftUI
 struct VitesseApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            AuthenticationView()
         }
     }
 }

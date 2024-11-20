@@ -4,82 +4,49 @@
 //
 //  Created by TLiLi Hamdi on 02/11/2024.
 //
-
 import SwiftUI
 
 struct AuthenticationView: View {
-    @StateObject private var viewModel = AuthenticationViewModel() // Instance de AuthenticationViewModel
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var isAuthenticated = false // Pour rediriger après la connexion
+    @StateObject private var viewModel = AuthenticationViewModel()
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Text("Login")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                InputView(label: "Email/Username", placeholder: "Username", text: $username)
-                InputView(label: "Password", placeholder: "Password", text: $password, isSecure: true)
-                
-                HStack {
-                    Spacer()
-                    NavigationLink(destination: ForgotPasswordView()) {
-                        Text("Forgot password?")
-                            .foregroundColor(.red)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding(.bottom, 30)
-                
-                VStack(spacing: 50) {
-                    Button(action: {
-                        viewModel.authenticate(email: username, password: password)
-                    }) {
-                        Text("Sign in")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(5)
-                    }
-                    .disabled(username.isEmpty || password.isEmpty) // Désactiver le bouton si les champs sont vides
-                    
-                    NavigationLink {
-                        RegistrationView()
-                            .navigationBarBackButtonHidden()
-                    } label: {
-                        Text("Register")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(5)
-                    }
-                }
-                
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 10)
-                }
-                
-                NavigationLink(
-                    destination: AllCandidatesView().navigationBarBackButtonHidden(),
-                    isActive: $isAuthenticated,
-                    label: { EmptyView() }
-                )
+        VStack(spacing: 20) {
+            Text("Login")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            
+            // Champs de texte pour l'e-mail et le mot de passe
+            InputView(label: "Email", placeholder: "Email", text: $viewModel.email)
+            InputView(label: "Password", placeholder: "Password", text: $viewModel.password, isSecure: true)
+            
+            // Bouton de connexion
+            Button("Sign in") {
+                viewModel.authenticate(email: viewModel.email, password: viewModel.password)
             }
+            .disabled(!viewModel.isFormValid)
+            .frame(maxWidth: .infinity)
             .padding()
-            .onReceive(viewModel.$isAuthenticated) { isAuth in
-                isAuthenticated = isAuth // Met à jour l’état en fonction de la réponse du ViewModel
+            .background(viewModel.isFormValid ? Color.blue : Color.gray)
+            .foregroundColor(.white)
+            .cornerRadius(5)
+            
+            // Affichage d'un message d'erreur
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10)
+            }
+            
+            // Bouton pour aller à l'écran d'inscription
+            NavigationLink(destination: RegistrationView()) {
+                Text("Register")
+                    .foregroundColor(.blue)
+                    .padding(.top, 20)
             }
         }
+        .padding()
+        .navigationTitle("Login")
     }
-}
-
-#Preview {
-    AuthenticationView()
 }

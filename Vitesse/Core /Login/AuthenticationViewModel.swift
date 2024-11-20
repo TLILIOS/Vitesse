@@ -8,20 +8,29 @@
 import Foundation
 
 class AuthenticationViewModel: ObservableObject {
+    @Published var showAlert: Bool = false
+    @Published var email: String = ""
+    @Published var password: String = ""
     @Published var isAuthenticated = false
-    @Published var isAdmin = false
     @Published var errorMessage: String?
 
+    var isFormValid : Bool {
+        !email.isEmpty && !password.isEmpty
+    }
+
+ 
     func authenticate(email: String, password: String) {
-        NetworkService.shared.authenticate(email: email, password: password) { result in
+        NetworkService.shared.performRequest(
+            endpoint: .authenticate(email: email, password: password),
+            responseType: AuthResponse.self
+        ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let response):
-                    self.isAuthenticated = true
-                    self.isAdmin = response.isAdmin
+                case .success(let authResponse):
+                    NetworkService.shared.setAuthToken(authResponse.token)
+                    self?.isAuthenticated = true
                 case .failure(let error):
-                    self.isAuthenticated = false
-                    self.errorMessage = error.localizedDescription
+                    self?.errorMessage = error.localizedDescription
                 }
             }
         }
